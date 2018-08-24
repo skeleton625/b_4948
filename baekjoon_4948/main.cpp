@@ -1,19 +1,18 @@
 #include <cstdio>
-#include <string.h>
+#include <algorithm>
 
-bool n[250001];
-int i1, c;
+bool n[246913] = { 1, 1 };
+int pr[21787];
+int i1, c, t;
 int main() {
-	memset(n, 1, 250000);
-	n[0] = false; n[1] = false;
-	for (int i = 2; i*i <= 250000; i++) {
-		if (n[i]) {
-			for (int j = i * i; j <= 250000; j += i) n[j] = false;
+	for (int i = 2; i <= 246912; i++) {
+		if (!n[i]) {
+			pr[t++] = i;
+			for (long long j = (long long)i*i; j <= 246912; j += i) n[j] = true;
 		}
 	}
 	while (scanf_s("%d", &i1) && i1) {
-		for (int i = i1+1; i <= i1*2; i++) if (n[i]) c++;
-		printf("%d\n", c);
+		printf("%d\n", std::lower_bound(pr, pr+21787, 2*i1+1) - std::upper_bound(pr, pr+21787, i1));
 		c = 0;
 	}
 	return 0;
